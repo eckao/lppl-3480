@@ -1,0 +1,1 @@
+og_text<-scan("original.txt",what="char")
