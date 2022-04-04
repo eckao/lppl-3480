@@ -36,6 +36,24 @@ library(diffr)
 diffr("og_clean.txt", "passed_clean.txt")
 
 #install.packages("stopwords")
-library("stopwords")
-stopwords("en", source = "snowball") 
+#install.packages("tm")
+library("tm")
+og_clean_stop <- removeWords(og_text, words = stopwords(kind = "en"))
+passed_clean_stop <- removeWords(passed_text, words = stopwords(kind = "en"))
+og_clean_stop
 
+og_clean_stop <- og_clean_stop[og_clean_stop != ""]
+og_clean_stop <- paste(unlist(og_clean_stop), collapse = "\n")
+
+passed_clean_stop <- passed_clean_stop[passed_clean_stop != ""]
+passed_clean_stop <- paste(unlist(passed_clean_stop), collapse = "\n")
+
+conn2<-file("passed_clean_nostop.txt")
+writeLines(passed_clean_stop, conn2)
+close(conn2)
+
+conn3<-file("og_clean_nostop.txt")
+writeLines(og_clean_stop, conn3)
+close(conn3)
+
+diffr("og_clean_nostop.txt", "passed_clean_nostop.txt")
