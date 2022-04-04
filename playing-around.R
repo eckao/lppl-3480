@@ -8,7 +8,7 @@ og_text <- str_replace_all(og_text, "[[:punct:]]", "")
 og_text
 og_text <- str_replace_all(og_text, "`", "")
 og_text
-og_text_one <- paste(unlist(og_text), collapse = " ")
+og_text_one <- paste(unlist(og_text), collapse = "\n")
 og_text_one
 conn1<-file("og_clean.txt")
 writeLines(og_text_one, conn1)
@@ -20,8 +20,17 @@ passed_text
 passed_text <- str_replace_all(passed_text, "[[:punct:]]", "")
 passed_text <- str_replace_all(passed_text, "`", "")
 passed_text
-passed_text_one <- paste(unlist(og_text), collapse = " ")
+passed_text_one <- paste(unlist(passed_text), collapse = "\n")
 passed_text_one
 conn<-file("passed_clean.txt")
 writeLines(passed_text_one, conn)
 close(conn)
+
+#install.packages("diffr")
+library(diffr)
+diffr("og_clean.txt", "passed_clean.txt")
+
+#install.packages("stopwords")
+library("stopwords")
+stopwords("en", source = "snowball") 
+
